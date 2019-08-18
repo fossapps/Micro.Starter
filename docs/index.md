@@ -14,5 +14,5 @@ As of now I see the following to be included on this kit:
 - [ ] Linting
 - [ ] Docker image generation after doing CI testing
 - [ ] Logging (probably with kibana, but maybe using interface instead)
-- [ ] Health Checks
+- [x] Health Checks
 - [ ] Caching
