@@ -1,6 +1,7 @@
 using Micro.Starter.Api.Workers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,6 +21,13 @@ namespace Micro.Starter.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddApiVersioning(x =>
+            {
+                x.DefaultApiVersion = new ApiVersion(1, 0);
+                x.RegisterMiddleware = true;
+                x.ReportApiVersions = true;
+                x.AssumeDefaultVersionWhenUnspecified = true;
+            });
             RegisterWorker(services);
         }
 
