@@ -1,0 +1,44 @@
+docs:
+  - title: Getting Started
+    children:
+      - title: "Quick-Start Guide"
+        url: /quick_start/
+      - title: "Structure"
+        url: /structure/
+      - title: "Projects Definition"
+        url: /project_definition/
+      - title: "Continuous Integration"
+        url: /ci/
+
+  - title: Included Middlewares
+    children:
+      - title: "~UUID~"
+        url: /middlewares/uuid/
+      - title: "Navigation"
+        url: /navigation/
+      - title: "UI Text"
+        url: /ui-text/
+      - title: "Authors"
+        url: /authors/
+      - title: "Layouts"
+        url: /layouts/
+
+  - title: Features
+    children:
+      - title: "Working with Posts"
+        url: /docs/posts/
+      - title: "Working with Pages"
+        url: /docs/pages/
+      - title: "Working with Collections"
+        url: /docs/collections/
+      - title: "Helpers"
+        url: /docs/helpers/
+      - title: "Utility Classes"
+        url: /docs/utility-classes/
+
+  - title: Extras
+    children:
+      - title: "Stylesheets"
+        url: /docs/stylesheets/
+      - title: "JavaScript"
+        url: /docs/javascript/
