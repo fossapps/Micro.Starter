@@ -1,14 +1,19 @@
-language: bash
+language: node
+node_js: 
+  - "12"
 services: docker
 before_install: 
   - docker pull mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview8-alpine3.9
 jobs:
   include:
     - stage: test
+      name: "unit tests"
       script: docker run --rm -v `pwd`:/app mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview8-alpine3.9 sh -c "cd /app; dotnet test"
     - stage: test
+      name: "build package"
       script: docker run --rm -v `pwd`:/app mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview8-alpine3.9 sh -c "cd /app; dotnet build"
     - stage: test
+      name: "postman tests"
       script: 
         - docker build . -t Micro.Starter
         - docker run -it --rm -d -p 5000:5000 micro.starter
