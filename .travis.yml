@@ -1,0 +1,16 @@
+language: bash
+services: docker
+before_install: 
+  - docker pull mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview8-alpine3.9
+jobs:
+  include:
+    - stage: test
+      script: docker run --rm -v `pwd`:/app mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview8-alpine3.9 sh -c "cd /app; dotnet test"
+    - stage: test
+      script: docker run --rm -v `pwd`:/app mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview8-alpine3.9 sh -c "cd /app; dotnet build"
+    - stage: test
+      script: 
+        - docker build . -t Micro.Starter
+        - docker run -it --rm -d -p 5000:5000 Micro.Starter
+    - stage: deploy
+      script: echo "deploying..."
