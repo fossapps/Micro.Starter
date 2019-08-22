@@ -16,7 +16,7 @@ jobs:
       node_js: 
         - "12"
       script: 
-        - docker build . -t Micro.Starter
+        - docker build . -t micro.starter
         - docker run -it --rm -d -p 5000:5000 micro.starter
         - sh ./Micro.Starter.UnitTest/ExternalTests/postman_tests.sh
     - stage: deploy
