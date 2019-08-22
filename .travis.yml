@@ -11,6 +11,7 @@ jobs:
     - stage: test
       script: 
         - docker build . -t Micro.Starter
-        - docker run -it --rm -d -p 5000:5000 Micro.Starter
+        - docker run -it --rm -d -p 5000:5000 micro.starter
+        - sh ./Micro.Starter.UnitTest/ExternalTests/postman_tests.sh
     - stage: deploy
       script: echo "deploying..."
