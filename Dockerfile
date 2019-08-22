@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview8-alpine3.9 as build
 WORKDIR /app
 COPY . .
 RUN dotnet restore
-RUN dotnet publish -c Release -o out --self-contained --runtime linux-x64
+RUN dotnet publish -c Release -o out --self-contained --runtime linux-x64 ./Micro.Starter.Api/Micro.Starter.Api.csproj
 
 FROM debian:jessie-slim
 WORKDIR /app
