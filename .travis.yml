@@ -24,4 +24,6 @@ jobs:
       language: node_js
       node_js: 
         - "12"
-      script: npx semantic-release
+      script: 
+        - npm i @semantic-release/exec
+        - npx semantic-release
