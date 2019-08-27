@@ -20,4 +20,10 @@ jobs:
         - docker run -it --rm -d -p 5000:5000 micro.starter
         - sh ./Micro.Starter.UnitTest/ExternalTests/postman_tests.sh
     - stage: deploy
-      script: echo "deploying..."
+      name: "semantic-release"
+      language: node_js
+      node_js: 
+        - "12"
+      script: 
+        - npm i @semantic-release/exec
+        - npx semantic-release
