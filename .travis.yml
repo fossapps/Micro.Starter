@@ -30,4 +30,4 @@ jobs:
         - "12"
       script:
         - npm i @semantic-release/exec
-        - npx semantic-release
+        - npx -c 'semantic-release'
