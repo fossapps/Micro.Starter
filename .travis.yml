@@ -15,15 +15,19 @@ jobs:
       language: node_js
       node_js: 
         - "12"
-      script: 
-        - docker build . -t micro.starter
-        - docker run -it --rm -d -p 5000:5000 micro.starter
+      script:
+        - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+        - docker build . -t fossapps/micro.starter  --build-arg VERSION=`git rev-parse --short=4 ${CIRCLE_SHA1}`
+        - docker run -it --rm -d -p 5000:5000 fossapps/micro.starter
         - sh ./Micro.Starter.UnitTest/ExternalTests/postman_tests.sh
+        - docker tag fossapps/micro.starter fossapps/micro.starter:`git rev-parse --short=4 ${CIRCLE_SHA1}`
+        - docker push fossapps/micro.starter:`git rev-parse --short=4 ${CIRCLE_SHA1}`
     - stage: deploy
       name: "semantic-release"
       language: node_js
       node_js: 
         - "12"
-      script: 
+      script:
+        - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
         - npm i @semantic-release/exec
         - npx semantic-release

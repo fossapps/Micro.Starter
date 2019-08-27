@@ -5,6 +5,9 @@ RUN dotnet restore
 RUN dotnet publish -c Release -o out --self-contained --runtime linux-x64 ./Micro.Starter.Api/Micro.Starter.Api.csproj
 
 FROM debian:jessie-slim
+
+ARG VERSION
+ENV APP_VERSION="${VERSION}"
 WORKDIR /app
 COPY --from=build /app/out/ ./
 RUN chmod +x ./Micro.Starter.Api && apt-get update && apt-get install -y --no-install-recommends libicu-dev && rm -Rf /var/lib/apt/lists/* && apt-get clean
