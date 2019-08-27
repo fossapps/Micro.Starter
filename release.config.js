@@ -36,15 +36,15 @@ module.exports = {
     prepare: [
         {
             path: "@semantic-release/exec",
+            cmd: "echo \"$DOCKERHUB_PASSWORD\" | docker login --username \"$DOCKERHUB_LOGIN\" --password-stdin"
+        },
+        {
+            path: "@semantic-release/exec",
             cmd: "docker pull fossapps/micro.starter:`git rev-parse --short=4 ${CIRCLE_SHA1}`"
         },
         {
             path: "@semantic-release/exec",
             cmd: "docker tag fossapps/micro.starter:`git rev-parse --short=4 ${CIRCLE_SHA1}` fossapps/micro.starter:${nextRelease.version}"
-        },
-        {
-            path: "@semantic-release/exec",
-            cmd: "echo \"$DOCKERHUB_PASSWORD\" | docker login -u \"$DOCKERHUB_LOGIN\" --password-stdin"
         }
     ],
     publish: [
