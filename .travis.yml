@@ -29,5 +29,5 @@ jobs:
       node_js: 
         - "12"
       script:
-        - npm i @semantic-release/exec
-        - npx -c 'semantic-release'
+        - npm i -g semantic-release @semantic-release/exec
+        - semantic-release
