@@ -18,10 +18,10 @@ jobs:
       script:
         - TAG=`git rev-parse --short ${TRAVIS_COMMIT}`
         - echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_LOGIN" --password-stdin
-        - docker build . -t fossapps/micro.starter  --build-arg VERSION=`$TAG`
+        - docker build . -t fossapps/micro.starter  --build-arg VERSION=$TAG
         - docker run -it --rm -d -p 5000:5000 fossapps/micro.starter
         - sh ./Micro.Starter.UnitTest/ExternalTests/postman_tests.sh
-        - docker tag fossapps/micro.starter fossapps/micro.starter:`$TAG`
+        - docker tag fossapps/micro.starter fossapps/micro.starter:$TAG
         - docker push fossapps/micro.starter:`$TAG`
     - stage: deploy
       name: "semantic-release"
