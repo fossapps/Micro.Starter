@@ -40,11 +40,11 @@ module.exports = {
         },
         {
             path: "@semantic-release/exec",
-            cmd: "docker pull fossapps/micro.starter:`git rev-parse --short=4 ${CIRCLE_SHA1}`"
+            cmd: "docker pull fossapps/micro.starter:`git rev-parse --short=4 ${TRAVIS_COMMIT}`"
         },
         {
             path: "@semantic-release/exec",
-            cmd: "docker tag fossapps/micro.starter:`git rev-parse --short=4 ${CIRCLE_SHA1}` fossapps/micro.starter:${nextRelease.version}"
+            cmd: "docker tag fossapps/micro.starter:`git rev-parse --short=4 ${TRAVIS_COMMIT}` fossapps/micro.starter:${nextRelease.version}"
         }
     ],
     publish: [
