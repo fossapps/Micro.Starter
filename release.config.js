@@ -46,15 +46,19 @@ module.exports = {
             path: "@semantic-release/exec",
             cmd: `docker tag fossapps/micro.starter:\`git rev-parse --short=4 ${process.env.TRAVIS_COMMIT}\` fossapps/micro.starter:\${nextRelease.version}`
         }
+        {
+            path: "@semantic-release/exec",
+            cmd: `docker tag fossapps/micro.starter:\`git rev-parse --short=4 ${process.env.TRAVIS_COMMIT}\` fossapps/micro.starter:latest`
+        }
     ],
     publish: [
         {
             path: "@semantic-release/exec",
-            cmd: "docker push fossapps/micro.starter"
+            cmd: "docker push fossapps/micro.starter:${nextRelease.version}"
         },
         {
             path: "@semantic-release/exec",
-            cmd: "docker push fossapps/micro.starter:${nextRelease.version}"
+            cmd: "docker push fossapps/micro.starter:latest"
         },
         "@semantic-release/github"
     ]
