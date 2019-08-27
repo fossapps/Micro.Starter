@@ -16,7 +16,7 @@ jobs:
       node_js: 
         - "12"
       script:
-        - echo "$DOCKER_HUB_PASSWORD" | docker login --username "$DOCKER_HUB_USER" --password-stdin
+        - echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_LOGIN" --password-stdin
         - docker build . -t fossapps/micro.starter  --build-arg VERSION=`git rev-parse --short=4 ${CIRCLE_SHA1}`
         - docker run -it --rm -d -p 5000:5000 fossapps/micro.starter
         - sh ./Micro.Starter.UnitTest/ExternalTests/postman_tests.sh
