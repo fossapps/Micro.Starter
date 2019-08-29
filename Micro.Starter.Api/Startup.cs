@@ -1,3 +1,4 @@
+using System;
 using Micro.Starter.Api.Configs;
 using Micro.Starter.Api.Models;
 using Micro.Starter.Api.Repository;
@@ -9,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Slack;
+using Microsoft.Extensions.Options;
 
 namespace Micro.Starter.Api
 {
@@ -47,6 +51,7 @@ namespace Micro.Starter.Api
         private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<DatabaseConfig>(configuration.GetSection("DatabaseConfig"));
+            services.Configure<SlackLoggingConfig>(configuration.GetSection("Logging").GetSection("Slack"));
         }
 
         private static void RegisterWorker(IServiceCollection services)
@@ -55,8 +60,9 @@ namespace Micro.Starter.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IOptions<SlackLoggingConfig> slackConfig)
         {
+            ConfigureSlack(loggerFactory, slackConfig.Value, env);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -67,6 +73,19 @@ namespace Micro.Starter.Api
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+
+        private static void ConfigureSlack(ILoggerFactory loggerFactory, SlackLoggingConfig slackConfig, IWebHostEnvironment env)
+        {
+            if (string.IsNullOrEmpty(slackConfig.WebhookUrl))
+            {
+                return;
+            }
+            loggerFactory.AddSlack(new SlackConfiguration
+            {
+                MinLevel = slackConfig.MinLogLevel,
+                WebhookUrl = new Uri(slackConfig.WebhookUrl)
+            }, env.ApplicationName, env.EnvironmentName);
         }
     }
 }
