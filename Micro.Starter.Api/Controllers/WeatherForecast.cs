@@ -1,6 +1,6 @@
 using System;
 
-namespace Micro.Starter.Api
+namespace Micro.Starter.Api.Controllers
 {
     public class WeatherForecast
     {

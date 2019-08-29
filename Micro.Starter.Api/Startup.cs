@@ -1,3 +1,7 @@
+using Micro.Starter.Api.Configs;
+using Micro.Starter.Api.Models;
+using Micro.Starter.Api.Repository;
+using Micro.Starter.Api.Uuid;
 using Micro.Starter.Api.Workers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +24,8 @@ namespace Micro.Starter.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AddConfiguration(services, Configuration);
+            ConfigureDependencies(services);
             services.AddControllers();
             services.AddApiVersioning(x =>
             {
@@ -29,6 +35,18 @@ namespace Micro.Starter.Api
                 x.AssumeDefaultVersionWhenUnspecified = true;
             });
             RegisterWorker(services);
+        }
+
+        private static void ConfigureDependencies(IServiceCollection services)
+        {
+            services.AddDbContext<ApplicationContext>();
+            services.AddScoped<IWeatherRepository, WeatherRepository>();
+            services.AddSingleton<IUuidService, UuidService>();
+        }
+
+        private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<DatabaseConfig>(configuration.GetSection("DatabaseConfig"));
         }
 
         private static void RegisterWorker(IServiceCollection services)
