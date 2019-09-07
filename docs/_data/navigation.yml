@@ -10,10 +10,10 @@ docs:
       - title: "Continuous Integration"
         url: /ci/
 
-  - title: Included Middlewares
+  - title: Automations
     children:
-      - title: "~UUID~"
-        url: /middlewares/uuid/
+      - title: "Automatic Releases"
+        url: /automations/release/
       - title: "Navigation"
         url: /navigation/
       - title: "UI Text"
