@@ -21,7 +21,7 @@ As of now I see the following to be included on this kit:
 - [x] document controller response type for swagger
 - [ ] Swagger Docs (`spec.json` endpoint and docs)
 - [ ] Linting
-- [ ] Docker image generation after doing CI testing
+- [x] Docker image generation after doing CI testing
 - [ ] Logging (probably with kibana, but maybe using interface instead)
 - [x] Health Checks
 - [ ] Caching
