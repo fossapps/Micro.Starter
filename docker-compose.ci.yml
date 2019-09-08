@@ -1,5 +1,11 @@
 version: '3'
 services:
+  api:
+    image: fossapps/micro.starter
+    ports:
+      - 5000:5000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=ci
   postgres:
     image: postgres:11-alpine
     ports:

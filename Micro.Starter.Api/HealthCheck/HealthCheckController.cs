@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using App.Metrics;
+using App.Metrics.Counter;
+using App.Metrics.Timer;
 using Micro.Starter.Api.Models;
 using Micro.Starter.Api.Repository;
 using Microsoft.AspNetCore.Http;
@@ -13,21 +16,33 @@ namespace Micro.Starter.Api.HealthCheck
     public class HealthCheckController : ControllerBase
     {
         private readonly IWeatherRepository _weather;
+        private readonly IMetrics _metrics;
 
-        public HealthCheckController(IWeatherRepository weather)
+        public HealthCheckController(IWeatherRepository weather, IMetrics metrics)
         {
             _weather = weather;
+            _metrics = metrics;
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<HealthData>), StatusCodes.Status200OK)]
         public async Task<HealthData> Get()
         {
-            return new HealthData
+            using (_metrics.Measure.Timer.Time(new TimerOptions
             {
-                FakeCacheHealth = await GetFakeCacheHealth(),
-                FakeDbHealth = await GetFakeDbHealth()
-            };
+                Name = "Sample.Timer",
+                MeasurementUnit = Unit.Requests,
+                DurationUnit = TimeUnit.Milliseconds,
+                RateUnit = TimeUnit.Milliseconds
+            }))
+            {
+                await Task.Delay(1000);
+                return new HealthData
+                {
+                    FakeCacheHealth = await GetFakeCacheHealth(),
+                    FakeDbHealth = await GetFakeDbHealth()
+                };
+            }
         }
 
         private async Task<bool> GetFakeDbHealth()
