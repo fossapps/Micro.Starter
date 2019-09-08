@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Micro.Starter.Api.Configs;
 using Micro.Starter.Api.Models;
 using Micro.Starter.Api.Repository;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Slack;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 namespace Micro.Starter.Api
 {
@@ -32,12 +34,14 @@ namespace Micro.Starter.Api
             services.AddMetrics();
             ConfigureDependencies(services);
             services.AddControllers();
-            services.AddApiVersioning(x =>
+            services.AddSwaggerGen(c =>
             {
-                x.DefaultApiVersion = new ApiVersion(1, 0);
-                x.RegisterMiddleware = true;
-                x.ReportApiVersions = true;
-                x.AssumeDefaultVersionWhenUnspecified = true;
+                c.ResolveConflictingActions(apiDescription => apiDescription.Last());
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Title",
+                    Version = "v1"
+                });
             });
             RegisterWorker(services);
         }
@@ -73,6 +77,12 @@ namespace Micro.Starter.Api
 
             app.UseAuthorization();
 
+            app.UseSwagger();
+            app.UseSwaggerUI(x =>
+            {
+                x.RoutePrefix = "swagger";
+                x.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
+            });
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
 
