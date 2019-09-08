@@ -3,8 +3,11 @@ using App.Metrics;
 using App.Metrics.AspNetCore;
 using App.Metrics.Extensions.Configuration;
 using App.Metrics.Formatters.InfluxDB;
+using Micro.Starter.Api.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Micro.Starter.Api
@@ -13,7 +16,12 @@ namespace Micro.Starter.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<ApplicationContext>().Database.Migrate();
+            }
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

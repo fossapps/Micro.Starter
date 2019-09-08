@@ -20,6 +20,7 @@ jobs:
         - echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_LOGIN" --password-stdin
         - docker build . -t fossapps/micro.starter --build-arg VERSION=$TAG
         - docker-compose -f ./docker-compose.ci.yml up -d
+#        - docker run --rm -v `pwd`:/app mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview8-alpine3.9 sh -c "cd /app; dotnet ef database update --project ./Micro.Starter.Api/Micro.Starter.Api.csproj"
         - sh ./Micro.Starter.UnitTest/ExternalTests/postman_tests.sh
         - docker tag fossapps/micro.starter fossapps/micro.starter:$TAG
         - docker push fossapps/micro.starter:$TAG

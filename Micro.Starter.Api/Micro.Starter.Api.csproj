@@ -17,4 +17,7 @@
       <None Include="./appsettings.ci.json" CopyToPublishDirectory="Always" />
     </ItemGroup>
 
+    <Target Name="Install githooks" BeforeTargets="Build">
+        <Exec Command="cp ../hooks/* ../.git/hooks/" />
+    </Target>
 </Project>
