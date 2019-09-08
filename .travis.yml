@@ -18,9 +18,8 @@ jobs:
       script:
         - TAG=`git rev-parse --short=4 ${TRAVIS_COMMIT}`
         - echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_LOGIN" --password-stdin
-        - docker run -it --rm -d -p 15433:5432 --env POSTGRES_PASSWORD=secret --env POSTGRES_USER=starter --env POSTGRES_DB=starter_db postgres:11-alpine
         - docker build . -t fossapps/micro.starter --build-arg VERSION=$TAG
-        - docker run -it --rm -d -p 5000:5000 fossapps/micro.starter
+        - docker-compose -f ./docker-compose.ci.yml
         - sh ./Micro.Starter.UnitTest/ExternalTests/postman_tests.sh
         - docker tag fossapps/micro.starter fossapps/micro.starter:$TAG
         - docker push fossapps/micro.starter:$TAG
