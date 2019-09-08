@@ -19,7 +19,7 @@ As of now I see the following to be included on this kit:
 - [x] health check support
 - [x] `ViewModel` to ensure communication is completely TypeSafe.
 - [x] document controller response type for swagger
-- [ ] Swagger Docs (`spec.json` endpoint and docs)
+- [x] Swagger Docs (`spec.json` endpoint and docs)
 - [ ] Linting
 - [x] Docker image generation after doing CI testing
 - [ ] Logging (probably with kibana, but maybe using interface instead)
