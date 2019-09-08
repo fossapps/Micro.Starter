@@ -29,6 +29,7 @@ namespace Micro.Starter.Api
         public void ConfigureServices(IServiceCollection services)
         {
             AddConfiguration(services, Configuration);
+            services.AddMetrics();
             ConfigureDependencies(services);
             services.AddControllers();
             services.AddApiVersioning(x =>

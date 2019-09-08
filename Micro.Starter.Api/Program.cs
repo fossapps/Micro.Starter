@@ -1,4 +1,10 @@
+using System;
+using App.Metrics;
+using App.Metrics.AspNetCore;
+using App.Metrics.Extensions.Configuration;
+using App.Metrics.Formatters.InfluxDB;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace Micro.Starter.Api
@@ -12,6 +18,20 @@ namespace Micro.Starter.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.ConfigureMetricsWithDefaults((context, builder) =>
+                        {
+                            builder.Configuration.ReadFrom(context.Configuration);
+                            builder.Report.ToInfluxDb(options =>
+                            {
+                                options.FlushInterval = TimeSpan.FromSeconds(5);
+                                context.Configuration.GetSection("MetricsOptions").Bind(options);
+                                options.MetricsOutputFormatter = new MetricsInfluxDbLineProtocolOutputFormatter();
+                            });
+                        });
+                    webBuilder.UseMetrics();
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
