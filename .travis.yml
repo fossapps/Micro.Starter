@@ -19,7 +19,7 @@ jobs:
         - TAG=`git rev-parse --short=4 ${TRAVIS_COMMIT}`
         - echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_LOGIN" --password-stdin
         - docker build . -t fossapps/micro.starter --build-arg VERSION=$TAG
-        - docker-compose -f ./docker-compose.ci.yml up
+        - docker-compose -f ./docker-compose.ci.yml up -d
         - sh ./Micro.Starter.UnitTest/ExternalTests/postman_tests.sh
         - docker tag fossapps/micro.starter fossapps/micro.starter:$TAG
         - docker push fossapps/micro.starter:$TAG
