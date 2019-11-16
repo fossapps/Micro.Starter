@@ -1,19 +1,26 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Micro.Starter.Api.Configs;
+using Micro.Starter.Api.HealthCheck;
 using Micro.Starter.Api.Models;
 using Micro.Starter.Api.Repository;
 using Micro.Starter.Api.Uuid;
 using Micro.Starter.Api.Workers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Slack;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Micro.Starter.Api
 {
@@ -32,6 +39,7 @@ namespace Micro.Starter.Api
             AddConfiguration(services, Configuration);
             services.AddMetrics();
             ConfigureDependencies(services);
+            ConfigureHealthChecks(services, Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -43,6 +51,13 @@ namespace Micro.Starter.Api
                 });
             });
             RegisterWorker(services);
+        }
+        private static void ConfigureHealthChecks(IServiceCollection services, IConfiguration configuration)
+        {
+            services
+                .AddHealthChecks()
+                .AddCheck<ConnectionToDbCheck>(nameof(ConnectionToDbCheck))
+                .AddCheck<MemoryCheck>(nameof(MemoryCheck));
         }
 
         private static void ConfigureDependencies(IServiceCollection services)
@@ -82,7 +97,30 @@ namespace Micro.Starter.Api
                 x.RoutePrefix = "swagger";
                 x.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
             });
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    ResponseWriter = WriteResponse,
+                    AllowCachingResponses = false,
+                });
+            });
+        }
+        private static Task WriteResponse(HttpContext httpContext, HealthReport result)
+        {
+            httpContext.Response.ContentType = "application/json";
+
+            var json = new JObject(
+                new JProperty("status", result.Status.ToString()),
+                new JProperty("results", new JObject(result.Entries.Select(pair =>
+                    new JProperty(pair.Key, new JObject(
+                        new JProperty("status", pair.Value.Status.ToString()),
+                        new JProperty("description", pair.Value.Description),
+                        new JProperty("data", new JObject(pair.Value.Data.Select(
+                            p => new JProperty(p.Key, p.Value))))))))));
+            return httpContext.Response.WriteAsync(
+                json.ToString(Formatting.Indented));
         }
 
         private static void ConfigureSlack(ILoggerFactory loggerFactory, SlackLoggingConfig slackConfig, IWebHostEnvironment env)
