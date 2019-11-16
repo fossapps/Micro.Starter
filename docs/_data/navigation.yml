@@ -7,6 +7,10 @@ docs:
         url: /structure/
       - title: "Continuous Integration"
         url: /ci/
+      - title: "Using API"
+        url: /api_docs/
+      - title: "Changing Configuration"
+        url: /changing_api_configuration/
 
   - title: Automations
     children:
