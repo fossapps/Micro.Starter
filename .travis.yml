@@ -1,7 +1,5 @@
 language: bash
 services: docker
-before_install: 
-  - docker pull mcr.microsoft.com/dotnet/core/sdk:3.0-alpine3.9
 jobs:
   include:
     - stage: test
