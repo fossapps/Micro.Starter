@@ -5,9 +5,8 @@ using App.Metrics.AspNetCore;
 using App.Metrics.Extensions.Configuration;
 using App.Metrics.Formatters.InfluxDB;
 using Micro.Starter.Api.Models;
+using Micro.Starter.Api.StartupExtensions;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,62 +15,25 @@ using Microsoft.Extensions.Logging;
 
 namespace Micro.Starter.Api
 {
-    public class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            using (var scope = host.Services.CreateScope())
-            {
-                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                try
-                {
-                    var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>().Database;
-                    await MigrateOrFail(db, logger);
-                }
-                catch (RetryLimitExceededException e)
-                {
-                    logger.LogCritical(e, "Error connecting to database, application can't start");
-                    Environment.ExitCode = 1;
-                    return;
-                }
-            }
-            host.Run();
-        }
-
-        private static async Task MigrateOrFail(DatabaseFacade db, ILogger logger)
-        {
-            for (var i = 0; i <= 3; i++)
-            {
-                var waitTime = new[] {1, 3, 8, 10}[i];
-                logger.LogInformation($"Db connection attempt in {waitTime} seconds");
-                await Task.Delay(TimeSpan.FromSeconds(waitTime));
-
-                if (await TryMigrate(db))
-                {
-                    return;
-                }
-                logger.LogWarning("Connection failed...");
-            }
-            throw new RetryLimitExceededException("Couldn't connect to database");
-        }
-
-        private static async Task<bool> TryMigrate(DatabaseFacade db)
-        {
+            using var scope = host.Services.CreateScope();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<ApplicationContext>>();
             try
             {
-                var canConnect = await db.CanConnectAsync();
-                if (!canConnect)
-                {
-                    return false;
-                }
-                await db.MigrateAsync();
-                return true;
+                var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>().Database;
+                await db.MigrateOrFail(logger);
             }
-            catch
+            catch (RetryLimitExceededException e)
             {
-                return false;
+                logger.LogCritical(e, "Error connecting to database, application can't start");
+                Environment.ExitCode = 1;
+                return;
             }
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
