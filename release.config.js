@@ -42,25 +42,25 @@ module.exports = {
         },
         {
             path: "@semantic-release/exec",
-            cmd: `docker pull devcurate/devcurate.${serviceName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\``
+            cmd: `docker pull fossapps/micro.${serviceName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\``
         },
         {
             path: "@semantic-release/exec",
-            cmd: `docker tag devcurate/devcurate.${serviceName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\` devcurate/devcurate.${serviceName}:\${nextRelease.version}`
+            cmd: `docker tag fossapps/micro.${serviceName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\` fossapps/micro.${serviceName}:\${nextRelease.version}`
         },
         {
             path: "@semantic-release/exec",
-            cmd: `docker tag devcurate/devcurate.${serviceName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\` devcurate/devcurate.${serviceName}:latest`
+            cmd: `docker tag fossapps/micro.${serviceName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\` fossapps/micro.${serviceName}:latest`
         }
     ],
     publish: [
         {
             path: "@semantic-release/exec",
-            cmd: `docker push devcurate/devcurate.${serviceName}:\${nextRelease.version}`
+            cmd: `docker push fossapps/micro.${serviceName}:\${nextRelease.version}`
         },
         {
             path: "@semantic-release/exec",
-            cmd: `docker push devcurate/devcurate.${serviceName}:latest`
+            cmd: `docker push fossapps/micro.${serviceName}:latest`
         },
         "@semantic-release/github"
     ]
