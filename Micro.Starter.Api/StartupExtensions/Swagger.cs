@@ -28,6 +28,7 @@ namespace Micro.Starter.Api.StartupExtensions
             {
                 x.RoutePrefix = "swagger";
                 x.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
+                x.RoutePrefix = string.Empty;
             });
         }
     }
