@@ -8,6 +8,7 @@ namespace Micro.Starter.Api.Internal.StartupExtensions
     {
         public static void ConfigureRequiredDependencies(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddDbContext<ApplicationContext>();
             services.AddScoped<IWeatherRepository, WeatherRepository>();
             services.AddSingleton<IUuidService, UuidService>();

@@ -1,3 +1,4 @@
+using Micro.Starter.Api.GraphQL.Extensions;
 using Micro.Starter.Api.Internal.Configs;
 using Micro.Starter.Api.Internal.StartupExtensions;
 using Microsoft.AspNetCore.Builder;
@@ -29,6 +30,7 @@ namespace Micro.Starter.Api
             services.AddControllers();
             services.ConfigureSwagger();
             services.RegisterWorker();
+            services.ConfigureGraphql();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +41,7 @@ namespace Micro.Starter.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.SetupGraphQl();
             app.UseRouting();
             app.UseAuthorization();
             app.AddSwaggerWithUi();
