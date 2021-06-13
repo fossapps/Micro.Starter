@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Tests
+namespace Micro.Starter.UnitTest
 {
     public class Tests
     {
