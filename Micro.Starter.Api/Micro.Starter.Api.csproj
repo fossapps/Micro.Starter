@@ -9,15 +9,23 @@
       <PackageReference Include="App.Metrics.AspNetCore.Mvc" Version="4.2.0" />
       <PackageReference Include="App.Metrics.Extensions.Configuration" Version="4.2.0" />
       <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="4.2.0" />
+      <PackageReference Include="Micro.Auth.Sdk" Version="2.1.2" />
+      <PackageReference Include="Micro.GraphQL.Federation" Version="1.1.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Logging.Slack" Version="1.1.0" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.6" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
       <None Include="./appsettings.ci.json" CopyToPublishDirectory="Always" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Micro.Starter.Storage\Micro.Starter.Storage.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Internal" />
     </ItemGroup>
 
     <Target Name="Install githooks" BeforeTargets="Build">

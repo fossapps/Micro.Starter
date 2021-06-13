@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Micro.Starter.Api.Configs
+namespace Micro.Starter.Api.Internal.Configs
 {
     public class SlackLoggingConfig
     {

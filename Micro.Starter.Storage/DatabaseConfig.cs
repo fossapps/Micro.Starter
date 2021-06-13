@@ -1,4 +1,4 @@
-namespace Micro.Starter.Api.Configs
+namespace Micro.Starter.Storage
 {
     public class DatabaseConfig
     {

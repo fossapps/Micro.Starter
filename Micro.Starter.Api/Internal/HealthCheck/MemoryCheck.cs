@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Micro.Starter.Api.HealthCheck
+namespace Micro.Starter.Api.Internal.HealthCheck
 {
     public class MemoryCheck : IHealthCheck
     {

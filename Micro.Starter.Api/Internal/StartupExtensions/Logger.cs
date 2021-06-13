@@ -1,10 +1,10 @@
 using System;
-using Micro.Starter.Api.Configs;
+using Micro.Starter.Api.Internal.Configs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Slack;
 
-namespace Micro.Starter.Api.StartupExtensions
+namespace Micro.Starter.Api.Internal.StartupExtensions
 {
     public static class Logger
     {

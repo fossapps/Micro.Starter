@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Micro.Starter.Api.Models;
+using Micro.Starter.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 
-namespace Micro.Starter.Api.StartupExtensions
+namespace Micro.Starter.Api.Internal.StartupExtensions
 {
     public static class Database
     {

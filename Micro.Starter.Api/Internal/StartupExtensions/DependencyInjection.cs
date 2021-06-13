@@ -1,9 +1,8 @@
-using Micro.Starter.Api.Models;
-using Micro.Starter.Api.Repository;
-using Micro.Starter.Api.Uuid;
+using Micro.Starter.Common.Uuid;
+using Micro.Starter.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Micro.Starter.Api.StartupExtensions
+namespace Micro.Starter.Api.Internal.StartupExtensions
 {
     public static class DependencyInjection
     {

@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Starter.Api", "Micro.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Starter.UnitTest", "Micro.Starter.UnitTest\Micro.Starter.UnitTest.csproj", "{4384EF12-1CE6-4672-BC61-2F20F83D2744}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Starter.Storage", "Micro.Starter.Storage\Micro.Starter.Storage.csproj", "{06038A4F-82E8-4AA4-8A37-6B8450B7E06A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Starter.Common", "Micro.Starter.Common\Micro.Starter.Common.csproj", "{21EB1C0F-3AF3-475C-8667-1BF3B351DABA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{4384EF12-1CE6-4672-BC61-2F20F83D2744}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4384EF12-1CE6-4672-BC61-2F20F83D2744}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4384EF12-1CE6-4672-BC61-2F20F83D2744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06038A4F-82E8-4AA4-8A37-6B8450B7E06A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06038A4F-82E8-4AA4-8A37-6B8450B7E06A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06038A4F-82E8-4AA4-8A37-6B8450B7E06A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06038A4F-82E8-4AA4-8A37-6B8450B7E06A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21EB1C0F-3AF3-475C-8667-1BF3B351DABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21EB1C0F-3AF3-475C-8667-1BF3B351DABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21EB1C0F-3AF3-475C-8667-1BF3B351DABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21EB1C0F-3AF3-475C-8667-1BF3B351DABA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

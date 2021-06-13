@@ -1,7 +1,7 @@
-using Micro.Starter.Api.Workers;
+using Micro.Starter.Api.Internal.Workers;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Micro.Starter.Api.StartupExtensions
+namespace Micro.Starter.Api.Internal.StartupExtensions
 {
     public static class Workers
     {

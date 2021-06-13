@@ -1,4 +1,4 @@
-namespace Micro.Starter.Api.Models
+namespace Micro.Starter.Storage
 {
     public class Weather
     {

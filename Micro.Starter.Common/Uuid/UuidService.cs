@@ -1,4 +1,4 @@
-namespace Micro.Starter.Api.Uuid
+namespace Micro.Starter.Common.Uuid
 {
     public class UuidService : IUuidService
     {

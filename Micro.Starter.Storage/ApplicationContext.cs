@@ -1,9 +1,8 @@
-using Micro.Starter.Api.Configs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Npgsql;
 
-namespace Micro.Starter.Api.Models
+namespace Micro.Starter.Storage
 {
     public class ApplicationContext : DbContext
     {

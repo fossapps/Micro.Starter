@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace Micro.Starter.Api.StartupExtensions
+namespace Micro.Starter.Api.Internal.StartupExtensions
 {
     public static class Swagger
     {

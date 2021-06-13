@@ -1,12 +1,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Micro.Starter.Api.Repository;
+using Micro.Starter.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Micro.Starter.Api.Workers
+namespace Micro.Starter.Api.Internal.Workers
 {
     public class Worker : BackgroundService
     {

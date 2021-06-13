@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Micro.Starter.Api.Models;
+using Micro.Starter.Storage;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Micro.Starter.Api.HealthCheck
+namespace Micro.Starter.Api.Internal.HealthCheck
 {
     public class ConnectionToDbCheck : IHealthCheck
     {

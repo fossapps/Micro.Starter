@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Micro.Starter.Api.Migrations
+namespace Micro.Starter.Storage.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -10,8 +10,8 @@ namespace Micro.Starter.Api.Migrations
                 name: "Weathers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Temperature = table.Column<double>(nullable: false)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Temperature = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {

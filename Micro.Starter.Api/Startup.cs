@@ -1,5 +1,5 @@
-using Micro.Starter.Api.Configs;
-using Micro.Starter.Api.StartupExtensions;
+using Micro.Starter.Api.Internal.Configs;
+using Micro.Starter.Api.Internal.StartupExtensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

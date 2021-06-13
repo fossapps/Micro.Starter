@@ -1,8 +1,9 @@
-using Micro.Starter.Api.Configs;
+using Micro.Starter.Api.Internal.Configs;
+using Micro.Starter.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Micro.Starter.Api.StartupExtensions
+namespace Micro.Starter.Api.Internal.StartupExtensions
 {
     public static class Configuration
     {
