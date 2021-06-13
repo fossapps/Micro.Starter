@@ -10,6 +10,7 @@ namespace Micro.Starter.Api.Internal.StartupExtensions
         public static void AddConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<DatabaseConfig>(configuration.GetSection("DatabaseConfig"));
+            services.Configure<Services>(configuration.GetSection("Services"));
             services.Configure<SlackLoggingConfig>(configuration.GetSection("Logging").GetSection("Slack"));
         }
     }

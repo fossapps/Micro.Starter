@@ -1,13 +1,43 @@
 version: '3'
 services:
+  key_store:
+    image: fossapps/micro.keystore:1.9.1
+    ports:
+      - 15000:15000
+    environment:
+      - ASPNETCORE_URLS=http://+:15000
+      - DatabaseConfig__AutoMigrate=true
+      - DatabaseConfig__Host=postgres
+      - DatabaseConfig__Port=5432
+      - DatabaseConfig__Name=keys
+      - DatabaseConfig__User=postgres
+      - DatabaseConfig__Password=postgres
+    depends_on:
+      - postgres
+  auth:
+    image: fossapps/micro.auth:2.1.2
+    ports:
+      - 25000:25000
+    environment:
+      - ASPNETCORE_URLS=http://+:25000
+      - DatabaseConfig__AutoMigrate=true
+      - DatabaseConfig__Host=postgres
+      - DatabaseConfig__Port=5432
+      - DatabaseConfig__Name=auth
+      - DatabaseConfig__User=postgres
+      - DatabaseConfig__Password=postgres
+      - Services__KeyStore__Url=http://key_store:15000
+    depends_on:
+      - postgres
   postgres:
     image: postgres:11-alpine
     ports:
       - 15433:5432
+    volumes:
+      - ./extras/docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
     environment:
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_USER=starter
-      - POSTGRES_DB=starter_db
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
   influxdb:
     image: influxdb
     environment:

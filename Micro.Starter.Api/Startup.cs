@@ -1,3 +1,4 @@
+using Micro.Auth.Sdk;
 using Micro.Starter.Api.GraphQL.Extensions;
 using Micro.Starter.Api.Internal.Configs;
 using Micro.Starter.Api.Internal.StartupExtensions;
@@ -31,6 +32,10 @@ namespace Micro.Starter.Api
             services.ConfigureSwagger();
             services.RegisterWorker();
             services.ConfigureGraphql();
+            services.ConfigureAuthServices(new Config
+            {
+                KeyStoreUrl = Configuration.GetSection("Services").Get<Services>().KeyStore.Url
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +48,7 @@ namespace Micro.Starter.Api
             }
             app.SetupGraphQl();
             app.UseRouting();
-            app.UseAuthorization();
+            app.SetupAuth();
             app.AddSwaggerWithUi();
             app.UseEndpoints(endpoints =>
             {
