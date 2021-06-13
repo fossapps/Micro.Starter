@@ -35,7 +35,10 @@
         <Folder Include="Internal" />
     </ItemGroup>
 
-    <Target Name="Install githooks" BeforeTargets="Build">
-        <Exec Command="cp ../hooks/* ../.git/hooks/" />
+    <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+        <ItemGroup>
+            <_CustomFiles Include="../extras/hooks/commit-msg" />
+        </ItemGroup>
+        <Copy SourceFiles="@(_CustomFiles)" DestinationFolder="./../.git/hooks" />
     </Target>
 </Project>
