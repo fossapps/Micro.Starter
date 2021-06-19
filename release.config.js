@@ -1,4 +1,4 @@
-const serviceName = 'starter'
+const dockerImageName = 'fossapps/micro.starter'
 
 class SemanticReleaseError extends Error {
     constructor(message, code, details) {
@@ -42,25 +42,25 @@ module.exports = {
         },
         {
             path: "@semantic-release/exec",
-            cmd: `docker pull fossapps/micro.${serviceName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\``
+            cmd: `docker pull ${dockerImageName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\``
         },
         {
             path: "@semantic-release/exec",
-            cmd: `docker tag fossapps/micro.${serviceName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\` fossapps/micro.${serviceName}:\${nextRelease.version}`
+            cmd: `docker tag ${dockerImageName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\` ${dockerImageName}:\${nextRelease.version}`
         },
         {
             path: "@semantic-release/exec",
-            cmd: `docker tag fossapps/micro.${serviceName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\` fossapps/micro.${serviceName}:latest`
+            cmd: `docker tag ${dockerImageName}:\`git rev-parse --short=4 ${process.env.GITHUB_SHA}\` ${dockerImageName}:latest`
         }
     ],
     publish: [
         {
             path: "@semantic-release/exec",
-            cmd: `docker push fossapps/micro.${serviceName}:\${nextRelease.version}`
+            cmd: `docker push ${dockerImageName}:\${nextRelease.version}`
         },
         {
             path: "@semantic-release/exec",
-            cmd: `docker push fossapps/micro.${serviceName}:latest`
+            cmd: `docker push ${dockerImageName}:latest`
         },
         "@semantic-release/github"
     ]
