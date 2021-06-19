@@ -48,7 +48,7 @@ jobs:
           docker push $DOCKER_IMAGE_NAME:$TAG
 
   publish:
-    needs: [ build-docker-image, run-postman-tests ]
+    needs: [ build-docker-image, run-unit-tests, build ]
     runs-on: ubuntu-latest
 
     steps:
