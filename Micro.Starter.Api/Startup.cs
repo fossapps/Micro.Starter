@@ -46,9 +46,10 @@ namespace Micro.Starter.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.SetupGraphQl();
+
             app.UseRouting();
             app.SetupAuth();
+            app.SetupGraphQl();
             app.AddSwaggerWithUi();
             app.UseEndpoints(endpoints =>
             {
